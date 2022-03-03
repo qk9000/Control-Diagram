@@ -162,7 +162,7 @@ Indent can be used by 4 spaces or one Tab.
 | connection | effection                                  |
 | ---------- | ------------------------------------------ |
 | `/_`       | subcell (can have multiple ones)           |
-| `/|`       | paracell (can have multiple ones)          |
+| `/\|`       | paracell (can have multiple ones)          |
 | `//`       | text one the line                          |
 | `/-`       | wrap to next line (can have multiple ones) |
 
