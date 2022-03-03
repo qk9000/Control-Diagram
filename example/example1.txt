@@ -1,0 +1,38 @@
++ Module Example 1
+    ! darkgreen
+    callee. |with color:green|
+        < caller // called by caller
+    ! default
+            ~ caller depend on this /| <P1> paracell1 /| paracell2
+caller depend on this /> P1
+    ~ database1 /> D4
+caller
+    <~ depend on caller
++ Module Example 2
+    depend on caller
+    orphan1
+        - orphan2
+            - orphan3
+    database1 /_ database2 & /- database3 /_ <D4> database4
+p5
+	= P
+P
+    ^ database1 /> D4
++ package 1
+    p1
+    p2
+    p3
+    p4
+p1
+    - p3
+p2
+    - p4
+++ package 2
+    p5
++++ package 3
+	p6 /- next line
+p5
+    { p2
+    {{ p3
+p6 /- next line
+	^^ P

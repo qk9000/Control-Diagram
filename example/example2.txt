@@ -1,0 +1,36 @@
++ 后期用于实现VM、VCPU管理的几个基础接口
+    vcpu_disable() /_ parameter can be [NULL(current)|vcpu] /_ Pre: save-brkpoint
+        # 上下文保存范围的设计 /_ 平台只在单VM时使用，所以保存的上下文较少，只有当多VM时才需进一步增加上下文的保存，比如gic，vtimer，turn on/off mmu等
+    vcpu_enable(vcpu) /_ Pre: isb
+        # 上下文保存范围的设计
+    vcpu_restore() /_ Pre: isb + restore vgic(vmcr/apr/lr) /_ 需配合vcpu_save()
+        # 如果只是vcpu之间的切换，使用vcpu_enable()过重，仍有优化空间，比如不需要重复开启vgic
+        vcpu_enable(vcpu)
+    vcpu_save(vcpu, isActive) /_ dsb + sysregs + save timer & vgic
+    可用于实现vm/vcpu的halt/resume
+        associateVCPUTCB(vcpu, tcb)
+            clear old associations of vcpu and tcb, then set vcpu pointer to the target one
+        dissociateVCPUTCB(vcpu, tcb)
+            : be in the foreground
+                vcpu_invalidate_active // yes
+                    : is running now
+                        vcpu_disable() // yes
+    已封装的TCB操作入口 /_ 注意：其实不一定包含完整虚拟化上下文的保存与恢复
+        vcpu_stop(vcpu)
+            seL4_TCB_Suspend(tcb)
+                : schedule in another new vm
+                    vcpu_save(vcpu, isActive) // yes
+                    vcpu_disable() // no and current vm is running
+        vcpu_start(vcpu)
+            seL4_TCB_Resume(tcb)
+                : has another VM in the foreground
+                    vcpu_restore() // yes
+                    vcpu_enable(vcpu) // no
+        start_new_vcpu(vcpu, entry_address, target_cpu)
+            vm_assign_vcpu_target(vcpu, target_cpu)
+                vcpu_set_boot_args(vcpu, entry_address)
+                    vcpu_start(vcpu)
+        vcpu_hotplug_on(vcpu, entry_address)
+            vcpu_set_boot_args(vcpu, entry_address)
+        vcpu_hotplug_off(vcpu)
+            vcpu_stop(vcpu)

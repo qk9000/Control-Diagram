@@ -1,0 +1,24 @@
++ Alice
+	1.send
+		-- 3.got
++ John
+	1.got
+		-- [Healthcheck](loop) /_ 2. Fight against hypochondria
+			[Healthcheck](loop)
+			! darkgoldenrod
+			-- Rational thoughts!
+			! default
+				-- 3.send
+					-- 4.send
+						-- 5.got
++ Bob
+	4.got
+		-- 5.send
+1.send
+	1.got // Hello John, how are you!
+3.send
+	~ 3.got // Great!
+4.send
+	4.got // How about you?
+5.send
+	~ 5.got // Jolly good!

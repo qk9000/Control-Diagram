@@ -1,0 +1,30 @@
++ State Machine Diagram of Process
+    描述进程状态机变迁路径与条件
+    Load ELF
+        PROC_CREATED_STATE
+            # Process is created
+            PROC_LOADING_STATE // To be loaded by the kernel thread
+                PROC_STOPPED_STATE
+                    # Process is ready to be started or unloaded
+                    PROC_STARTING_STATE // To be started by the kernel thread
+                        PROC_STARTED_STATE
+                            # Process is running
+                            PROC_DEINITIALIZING_STATE // To start the deinit thread of process
+                                PROC_STOPPING_STATE // To be stopped by the kernel thread, after deinit is complete
+                                    PROC_STOPPED_STATE
+                                        PROC_UNLOADING_STATE // To be unloaded by the kernel thread
+    Load ELF
+        PROC_FAILED_STATE
+            # Process failed during creation
+    PROC_STOPPED_STATE
+        PROC_KILLING_STATE // To be unloaded by the kernel thead, from any complete state. Should cleanup resources
+    PROC_FAILED_STATE
+        PROC_KILLING_STATE
+    PROC_STARTED_STATE
+        PROC_KILLING_STATE
+    PROC_KILLING_STATE
+        PROC_KILLING_STATE // Should cleanup resources
+    PROC_FAILED_STATE
+        PROC_UNLOADING_STATE
+    PROC_KILLING_STATE
+        PROC_UNLOADING_STATE
