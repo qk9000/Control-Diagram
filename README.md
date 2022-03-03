@@ -138,15 +138,15 @@ Indent can be used by 4 spaces or one Tab.
 
 > Use space as delimiter for symbols, connections, prefix, postfix
 
-| symbol                | effection                            |
-| --------------------- | ------------------------------------ |
-| <none>（Just indent） | invoke flow（Program）or link（UML） |
+| symbol                | effection                                 |
+| --------------------- | ----------------------------------------- |
+| <none>（Just indent） | invoke flow（Program）or associate（UML）  |
 
 | symbol | effection                                                    |
 | ------ | ------------------------------------------------------------ |
 | `+`    | heading module（support multiple '+', i.e. multiple layer），but cross module connections should not be under it |
 | `:`    | condition                                                    |
-| `<`    | invoked flow（Program）or linked by（UML）                   |
+| `<`    | invoked flow（Program）or associated by（UML）               |
 | `~`    | asynchronous transmission（Program）or depend（UML）         |
 | `<~`   | backward asynchronous transmission（Program）or depended by（UML） |
 | `#`    | comment                                                      |
@@ -155,14 +155,14 @@ Indent can be used by 4 spaces or one Tab.
 | `--`   | queue up with line                                           |
 | `=`    | link                                                         |
 | `{`    | aggregation（UML）                                           |
-| `{{`   | 组合（UML）                                                  |
-| `^`    | inherit（UML）                                               |
-| `^^`   | 实现（UML）                                                  |
+| `{{`   | composition（UML）                                           |
+| `^`    | extend（UML）                                                |
+| `^^`   | implement（UML）                                             |
 
 | connection | effection                                  |
 | ---------- | ------------------------------------------ |
 | `/_`       | subcell (can have multiple ones)           |
-| `/\|`       | paracell (can have multiple ones)          |
+| `/\|`       | paracell (can have multiple ones)         |
 | `//`       | text one the line                          |
 | `/-`       | wrap to next line (can have multiple ones) |
 
