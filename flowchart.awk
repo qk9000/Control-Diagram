@@ -12,26 +12,30 @@ function comment_filter(l_comment, l_type) {
 
 	if (l_type == 1) {
 		# EOL
-		#l_comment = gensub(/[ ][/][.][ ]/, "\\\\n ", "g", l_comment);
-		l_comment = gensub(/[ ][/][-][ ]/, "\\\\n ", "g", l_comment);
-		#l_comment = gensub(/[)][ ]/, ")\\\\n ", "g", l_comment);
-		#l_comment = gensub(/[-][ ]/, "-\\\\n ", "g", l_comment);
-		#l_comment = gensub(/[:][ ]/, ":\\\\n ", "g", l_comment);
-		l_comment = gensub(/[,][ ]/, ",\\\\n ", "g", l_comment);
-		l_comment = gensub(/[.][ ]/, ".\\\\n ", "g", l_comment);
-		l_comment = gensub(/[;][ ]/, ";\\\\n ", "g", l_comment);
-		l_comment = gensub(/[?][ ]/, "?\\\\n ", "g", l_comment);
-		l_comment = gensub(/[!][ ]/, "!\\\\n ", "g", l_comment);
-		#l_comment = gensub(/[）]/,   "）\\\\n", "g", l_comment);
-		#l_comment = gensub(/[—][—]/, "——\\\\n", "g", l_comment);
-		#l_comment = gensub(/[：]/,   "：\\\\n", "g", l_comment);
-		l_comment = gensub(/[，]/,   "，\\\\n", "g", l_comment);
-		l_comment = gensub(/[。]/,   "。\\\\n", "g", l_comment);
-		l_comment = gensub(/[；]/,   "；\\\\n", "g", l_comment);
-		l_comment = gensub(/[？]/,   "？\\\\n", "g", l_comment);
-		l_comment = gensub(/[！]/,   "！\\\\n", "g", l_comment);
-		#l_comment = gensub(/[、]/,   "、\\\\n", "g", l_comment);
+		#l_comment = gensub(/[ ][/][.][ ]/, "\\\\l ", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][ ][/][-][ ]/, "\\\\l\\\\l ", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][/][-][ ]/, "\\\\l\\\\l ", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][ ]/, "\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[)][ ]/, ")\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[-][ ]/, "-\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[:][ ]/, ":\\\\l ", "g", l_comment);
+		l_comment = gensub(/[,][ ]/, ",\\\\l ", "g", l_comment);
+		l_comment = gensub(/[.][ ]/, ".\\\\l ", "g", l_comment);
+		l_comment = gensub(/[;][ ]/, ";\\\\l ", "g", l_comment);
+		l_comment = gensub(/[?][ ]/, "?\\\\l ", "g", l_comment);
+		l_comment = gensub(/[!][ ]/, "!\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[）]/,   "）\\\\l", "g", l_comment);
+		#l_comment = gensub(/[—][—]/, "——\\\\l", "g", l_comment);
+		#l_comment = gensub(/[：]/,   "：\\\\l", "g", l_comment);
+		l_comment = gensub(/[，]/,   "，\\\\l", "g", l_comment);
+		l_comment = gensub(/[。]/,   "。\\\\l", "g", l_comment);
+		l_comment = gensub(/[；]/,   "；\\\\l", "g", l_comment);
+		l_comment = gensub(/[？]/,   "？\\\\l", "g", l_comment);
+		l_comment = gensub(/[！]/,   "！\\\\l", "g", l_comment);
+		#l_comment = gensub(/[、]/,   "、\\\\l", "g", l_comment);
 	}
+	#l_comment = gensub(/$/,"\\\\l", "g", l_comment);
+	l_comment = l_comment "\\l"
 	return l_comment;
 }
 
@@ -96,10 +100,10 @@ function name_filter(l_node, l_type) {
 		sub_cell = comment_filter(sub_cell, 1);
 		sub_cell = gensub(/([^/])[|]/, "\\1│", "g", sub_cell);
 		if (is_sub == 1) {
-			sub_cell = gensub(/ [/][_] /, " \\| ", "g", sub_cell);
+			sub_cell = gensub(/ [/][_] /, " \\\\l\\| ", "g", sub_cell);
 		}
 		else if (is_sub == 2) {
-			sub_cell = gensub(/ [/][|] /, " \\| ", "g", sub_cell);
+			sub_cell = gensub(/ [/][|] /, " \\\\l\\| ", "g", sub_cell);
 		}
 	}
 
@@ -147,20 +151,26 @@ function print_subgraph(l_node) {
 	if (module_depth == 0) {
 		return
 	}
-		printf("\tsubgraph cluster_%s {fontname=\"%s\";fontsize=15;label=\"%s\";", module_c, cluster_font, module);
+		#rank=min;
+		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module_c, cluster_font, module);
 	if (module_depth >= 2) {
-		printf("\tsubgraph cluster_%s {fontname=\"%s\";fontsize=15;label=\"%s\";", module2_c, cluster_font, module2);
+		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module2_c, cluster_font, module2);
 	}
 	if (module_depth >= 3) {
-		printf("\tsubgraph cluster_%s {fontname=\"%s\";fontsize=15;label=\"%s\";", module3_c, cluster_font, module3);
+		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module3_c, cluster_font, module3);
 	}
 	if (module_depth >= 4) {
-		printf("\tsubgraph cluster_%s {fontname=\"%s\";fontsize=15;label=\"%s\";", module4_c, cluster_font, module4);
+		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module4_c, cluster_font, module4);
 	}
 	if (module_depth >= 5) {
-		printf("\tsubgraph cluster_%s {fontname=\"%s\";fontsize=15;label=\"%s\";", module5_c, cluster_font, module5);
+		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module5_c, cluster_font, module5);
 	}
-	printf("\"%s\";", l_node);
+	#if (l_l_align == 1) {
+	#	printf("\"%s\\l\";", l_node);
+	#}
+	#else {
+		printf("\"%s\";", l_node);
+	#}
 	if (module_depth >= 5) {
 		printf("};");
 	}
@@ -196,10 +206,13 @@ BEGIN {
 		printf("\trankdir=%s;\n", direction);
 		# line's location might not be re-arranged
 		#printf("\tordering=out;\n");
+		printf("\tlabeljust=l;\n");
 		printf("\tratio=fill;\n");
 		printf("\tesep=-0.4;\n");
-		printf("\tnodesep=0.25;\n");
-		printf("\tranksep=0.02;\n");
+		#printf("\tnodesep=0.25;\n");
+		#printf("\tranksep=0.02;\n");
+		printf("\tnodesep=2;\n");
+		printf("\tranksep=0.2;\n");
 		printf("\tpack=false;\n");
 		printf("\tpad=0.01;\n");
 		printf("\tmodel=sgd;\n");
@@ -214,17 +227,18 @@ BEGIN {
 		if (swimlane == "yes") {
 			#printf("\tnewrank=false;\n");
 			printf("\tnewrank=true;\n");
-			#printf("\tsplines=polyline;\n");
-			printf("\tsplines=ortho;\n");
+			printf("\tsplines=polyline;\n");
+			#printf("\tsplines=ortho;\n");
 		}
 		else {
 			printf("\tsplines=spline;\n");
+			#printf("\tsplines=line;\n");
 		}
-		printf("\trankType=min;\n");
+		printf("\trank=max;\n");
 		printf("\tbgcolor=%s;\n", bgcolor);
 		printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n",
 			   shape, font, cell_color);
-		printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=0.5,penwidth=0.5,color=\"%s\"];\n", font, line_color);
+		printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, line_color);
 	}
 }
 {
@@ -294,6 +308,10 @@ BEGIN {
 
 	nodedepth = int((nodedepth) / nodebase);
 
+	if ((maxdepth > 0) && (nodedepth > maxdepth)) {
+		next;
+	}
+
 	# If whose depth is 1 less than him, who is his parent
 	if ((oldnodedepth != -1) && (nodedepth - oldnodedepth) >= 1) {
 		step = nodedepth - oldnodedepth;
@@ -308,10 +326,11 @@ BEGIN {
 			n = cell_color;
 			printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, n);
 			n = line_color;
-			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=0.5,penwidth=0.5,color=\"%s\"];\n", font, n);
+			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, n);
 		}
 		else {
-			printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded,bold\",fillcolor=\"%s\"];\n", shape, font, n);
+			#printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded,bold\",fillcolor=\"%s\"];\n", shape, font, n);
+			printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, n);
 			printf("\tedge [fontname=%s,fontsize=12,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, n);
 		}
 		next;
@@ -332,7 +351,12 @@ BEGIN {
 			#printf("\t\"%s\" [shape=note,style=\"dashed,filled\",fillcolor=aliceblue];\n", n);
 			n = name_filter(n, 0);
 			printf("\t\"%s\" [style=\"dashed,filled\",fillcolor=aliceblue];\n", n);
-			printf("\t\"%s\"%s -> \"%s\"%s [style=dashed,arrowhead=none];\n", n, mark, p_n, p_mark);
+			#printf("\t\"%s\"%s -> \"%s\"%s [dir=none,label=\"%s\",style=dashed,arrowhead=none];{rank=same; \"%s\"%s; \"%s\"%s;};\n",
+			#	   p_n, p_mark, n, mark, line_label, p_n, p_mark, n, mark);
+			printf("\t\"%s\"%s -> \"%s\"%s [dir=none,label=\"%s\",style=dashed,arrowhead=none];\n",
+				   p_n, p_mark, n, mark, line_label);
+			#printf("\t\"%s\"%s -> \"%s\"%s [color=%s,arrowhead=none];\n",
+			#	   n, mark, p_n, p_mark, bgcolor);
 			print_subgraph(n);
 		}
 		## package
@@ -346,7 +370,7 @@ BEGIN {
 			n = name_filter(n, 1);
 			printf("\t\"%s\" [shape=diamond,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n",
 				   n, font, choose_color);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=open];\n", p_n, p_mark, n, mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=curve];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
 		## link to another module
@@ -370,9 +394,9 @@ BEGIN {
 		# trigger or 依赖
 		else if (match(node, "^[~] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=dashed,arrowhead=open];\n", p_n, p_mark, n, mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=dashed,arrowhead=curve];\n", p_n, p_mark, n, mark, line_label);
 			if (module_attach != "") {
-				printf("\t\"%s\" -> \"%s\" [style=dashed,arrowhead=open];\n", n, module_attach" "name);
+				printf("\t\"%s\" -> \"%s\" [style=dashed,arrowhead=curve];\n", n, module_attach" "name);
 				module_attach = "";
 			}
 			print_subgraph(n);
@@ -380,9 +404,9 @@ BEGIN {
 		# triggered
 		else if (match(node, "^[<][~] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=dashed,arrowhead=open];\n", n, mark, p_n, p_mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=dashed,arrowhead=curve];\n", n, mark, p_n, p_mark, line_label);
 			if (module_attach != "") {
-				printf("\t\"%s\" -> \"%s\" [style=dashed,arrowhead=open];\n", module_attach" "name, n);
+				printf("\t\"%s\" -> \"%s\" [style=dashed,arrowhead=curve];\n", module_attach" "name, n);
 				module_attach = "";
 			}
 			print_subgraph(n);
@@ -390,9 +414,9 @@ BEGIN {
 		# linked
 		else if (match(node, "^[<] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=open];\n", n, mark, p_n, p_mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=curve];\n", n, mark, p_n, p_mark, line_label);
 			if (module_attach != "") {
-				printf("\t\"%s\" -> \"%s\" [style=solid,arrowhead=open];\n", module_attach" "name, n);
+				printf("\t\"%s\" -> \"%s\" [style=solid,arrowhead=curve];\n", module_attach" "name, n);
 				module_attach = "";
 			}
 			print_subgraph(n);
@@ -400,32 +424,36 @@ BEGIN {
 		# 聚合
 		else if (match(node, "^[{] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=odiamond];\n", n, mark, p_n, p_mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [dir=back,label=\"%s\",style=solid,arrowhead=odiamond];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
 		# 组合
 		else if (match(node, "^[{][{] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=diamond];\n", n, mark, p_n, p_mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [dir=back,label=\"%s\",style=solid,arrowhead=diamond];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
 		# 继承
 		else if (match(node, "^[\\^] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=empty];\n", n, mark, p_n, p_mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [dir=back,label=\"%s\",style=solid,arrowhead=empty];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
 		# 实现
 		else if (match(node, "^[\\^][\\^] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=dashed,arrowhead=empty];\n", n, mark, p_n, p_mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [dir=back,label=\"%s\",style=dashed,arrowhead=empty];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
 		# equal
 		else if (match(node, "^[=] ")) {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=dotted,arrowhead=none];\n",
+			#printf("\t\"%s\"%s -> \"%s\"%s [dir=none,label=\"%s\",style=dotted,arrowhead=none];{rank=same; \"%s\"%s; \"%s\"%s;};\n",
+			#	   p_n, p_mark, n, mark, line_label, p_n, p_mark, n, mark);
+			printf("\t\"%s\"%s -> \"%s\"%s [dir=none,label=\"%s\",style=dotted,arrowhead=none];\n",
 				   p_n, p_mark, n, mark, line_label);
+			#printf("\t\"%s\"%s -> \"%s\"%s [color=%s,arrowhead=none];\n",
+			#	   n, mark, p_n, p_mark, bgcolor);
 			#printf("\t\"%s\"%s -> \"%s\"%s [style=dotted,color=%s,arrowhead=none];\n",
 			#	   n, mark, p_n, p_mark, equal_color);
 			print_subgraph(n);
@@ -433,7 +461,7 @@ BEGIN {
 		# invoke
 		else {
 			n = name_filter(n, 0);
-			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=open];\n", p_n, p_mark, n, mark, line_label);
+			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=curve];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
 	}

@@ -62,15 +62,15 @@
 #```
 ### 语法
 #缩进可以使用4个空格，也可以使用Tab。
-#| 无符号       | 图形                              |
-#| ------------ | --------------------------------- |
-#| 无（仅缩进） | invoke flow（程序）or link（UML） |
+#| 无符号       | 图形                                   |
+#| ------------ | -------------------------------------- |
+#| 无（仅缩进） | invoke flow（程序）or associate（UML） |
 #下面的符号需要空格作为与内容之间的分隔符
 #| 符号 | 图形                                                                           |
 #| ---- | ------------------------------------------------------------------------------ |
 #| `+`  | 标题模块(支持多个'+'，即多层)，但其下方不应存在跨模块连接                      |
 #| `:`  | 条件判断                                                                       |
-#| `<`  | invoked flow（程序）or linked by（UML）                                        |
+#| `<`  | invoked flow（程序）or associated by（UML）                                    |
 #| `~`  | asynchronous transmission（程序）or depend（UML）                              |
 #| `<~` | backward asynchronous transmission（程序）or depended by（UML）                |
 #| `#`  | 批注框                                                                         |
@@ -78,10 +78,10 @@
 #| `-`  | queue up with no line                                                          |
 #| `--` | queue up with line                                                             |
 #| `=`  | link                                                                           |
-#| `{`  | 聚合（UML）                                                                    |
-#| `{{` | 组合（UML）                                                                    |
-#| `^`  | 继承（UML）                                                                    |
-#| `^^` | 实现（UML）                                                                    |
+#| `{`  | aggregation（UML）                                                             |
+#| `{{` | composition（UML）                                                             |
+#| `^`  | extend（UML）                                                                  |
+#| `^^` | implement（UML）                                                               |
 #| 连接符 | 图形                              |
 #| ------ | --------------------------------- |
 #| `/_`   | subcell (can have multiple ones)  |
@@ -249,11 +249,11 @@ file="`find -L $@ -type f | tr '\n' ' '`"
 _DATA=$(date '+%Y%m%d_%H%M%S')
 
 if [[ $text == 1 ]]; then
-    [ -n "$depth" ] && depth=" -d $depth "
+    [ -n "$depth" ] && maxdepth=" -d $depth " || maxdepth=""
     if [[ "x${func}" == "x" ]]; then
-        calltree="-A $brief $depth"
+        calltree="-A $brief $maxdepth"
     else
-        calltree="$brief $depth -m ${func}"
+        calltree="$brief $maxdepth -m ${func}"
     fi
     which cflow >/dev/null 2>&1
     if [ $? -ne 0 ]; then
@@ -275,6 +275,7 @@ pic=${_DATA}.${PIC_TYPE}
 pic2=${_DATA}.${PIC_TYPE2}
 long_pic=${TDIR}/${pic}
 long_pic2=${TDIR}/${pic2}
+[ ! -n "$depth" ] && maxdepth=0 || maxdepth=$depth
 cat ${file} | expand -t 4 -i \
 | grep -vE ^\s*$ \
 | grep -vwE "^\W*${filterstr// /|^\\W*}" \
@@ -290,6 +291,7 @@ cat ${file} | expand -t 4 -i \
 	  -v cluster_font="$cluster_font" \
 	  -v cell_color="$cell_color" \
 	  -v equal_color="$equal_color" \
+	  -v maxdepth=$maxdepth \
 	  -f ${CDIR}/flowchart.awk \
 > ${TDIR}/${_DATA}.tmp
 cat ${TDIR}/${_DATA}.tmp | dot -T${PIC_TYPE} -o "${long_pic}"
