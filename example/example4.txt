@@ -1,10 +1,12 @@
+# -d TB
+# -s
 + Alice
 	1.send
 		-- 3.got
 + John
 	1.got
-		-- [Healthcheck](loop) /_ 2. Fight against hypochondria
-			[Healthcheck](loop)
+		-- 2.Fight against hypochondria /_ [Healthcheck](loop)
+			2.Fight against hypochondria
 			! darkgoldenrod
 			-- Rational thoughts!
 			! default

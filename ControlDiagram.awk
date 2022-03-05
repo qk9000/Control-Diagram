@@ -152,18 +152,18 @@ function print_subgraph(l_node) {
 		return
 	}
 		#rank=min;
-		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module_c, cluster_font, module);
+		printf("\tsubgraph cluster_%s {labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module_c, cluster_font, module);
 	if (module_depth >= 2) {
-		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module2_c, cluster_font, module2);
+		printf("\tsubgraph cluster_%s {labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module2_c, cluster_font, module2);
 	}
 	if (module_depth >= 3) {
-		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module3_c, cluster_font, module3);
+		printf("\tsubgraph cluster_%s {labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module3_c, cluster_font, module3);
 	}
 	if (module_depth >= 4) {
-		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module4_c, cluster_font, module4);
+		printf("\tsubgraph cluster_%s {labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module4_c, cluster_font, module4);
 	}
 	if (module_depth >= 5) {
-		printf("\tsubgraph cluster_%s {rank=max;labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module5_c, cluster_font, module5);
+		printf("\tsubgraph cluster_%s {labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module5_c, cluster_font, module5);
 	}
 	#if (l_l_align == 1) {
 	#	printf("\"%s\\l\";", l_node);
@@ -199,42 +199,33 @@ BEGIN {
 	module_depth = 0;
 	# 4 spaces per step
 	nodebase = 4;
+	oldswimlane = "";
+	olddirection = "";
 
 	# Print some setting info
 	if (output == "dot") {
 		printf("digraph G {\n");
-		printf("\trankdir=%s;\n", direction);
 		# line's location might not be re-arranged
 		#printf("\tordering=out;\n");
+		#printf("\tlayout=fdp;\n");
+		#printf("\tclusterrank=global;\n");
+		printf("\tcompound=true;\n");
 		printf("\tlabeljust=l;\n");
 		printf("\tratio=fill;\n");
 		printf("\tesep=-0.4;\n");
 		#printf("\tnodesep=0.25;\n");
 		#printf("\tranksep=0.02;\n");
-		printf("\tnodesep=2;\n");
-		printf("\tranksep=0.2;\n");
 		printf("\tpack=false;\n");
 		printf("\tpad=0.01;\n");
 		printf("\tmodel=sgd;\n");
 		printf("\tmaxiter=999;\n");
 		printf("\tlevelsgap=-999;\n");
 		printf("\tlen=0.01;\n");
-		printf("\tminlen=1;\n");
+		printf("\tminlen=0.01;\n");
 		printf("\tdefaultdist=epsilon;\n");
 		printf("\tK=0;\n");
 		#printf("\tsep=0;\n");
 		#printf("\tlabeldistance=0;\n");
-		if (swimlane == "yes") {
-			#printf("\tnewrank=false;\n");
-			printf("\tnewrank=true;\n");
-			printf("\tsplines=polyline;\n");
-			#printf("\tsplines=ortho;\n");
-		}
-		else {
-			printf("\tsplines=spline;\n");
-			#printf("\tsplines=line;\n");
-		}
-		printf("\trank=max;\n");
 		printf("\tbgcolor=%s;\n", bgcolor);
 		printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n",
 			   shape, font, cell_color);
@@ -247,10 +238,16 @@ BEGIN {
 	if (nodedepth == 0) {
 		next;
 	}
-	else if (match($0, "^[#]")) {
-		next;
-	}
-	else if (match($0, "^[/][/]")) {
+	else if (match($0, "^[#]") || match($0, "^[/][/]")) {
+		if (match($0, "^[#][ \t]*-d[ \t]LR")) {
+			direction="LR";
+		}
+		else if (match($0, "^[#][ \t]*-d[ \t]TB")) {
+			direction="TB";
+		}
+		else if (match($0, "^[#][ \t]*-s")) {
+			swimlane="yes";
+		}
 		next;
 	}
 	else if (nodedepth == 1) {
@@ -259,6 +256,28 @@ BEGIN {
 		mark_a[0] = "";
 		oldnodedepth = -1;
 		nodefirst = 1;
+	}
+
+	if (swimlane != oldswimlane) {
+		if (swimlane == "yes") {
+			#printf("\tnewrank=false;\n");
+			#printf("\tsplines=ortho;\n");
+			printf("\tnewrank=true;\n");
+			printf("\tsplines=polyline;\n");
+		}
+		else {
+			#printf("\tsplines=line;\n");
+			printf("\tsplines=spline;\n");
+			printf("\trank=max;\n");
+			printf("\tnodesep=2;\n");
+			printf("\tranksep=0.2;\n");
+		}
+		oldswimlane = swimlane;
+	}
+
+	if (direction != olddirection) {
+		printf("\trankdir=%s;\n", direction);
+		olddirection = direction;
 	}
 
 	node = substr($0, nodedepth);

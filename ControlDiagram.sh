@@ -200,6 +200,7 @@ function usage
     echo "   -F <string [string]> - strings to filter out"
     echo "   -c <code-file> - input file is raw code"
     echo "   -s enable swimlane"
+    echo "   -S disable swimlane"
     echo "   -r reverse flow as order as called by"
     echo ""
 }
@@ -292,7 +293,7 @@ cat ${file} | expand -t 4 -i \
 	  -v cell_color="$cell_color" \
 	  -v equal_color="$equal_color" \
 	  -v maxdepth=$maxdepth \
-	  -f ${CDIR}/flowchart.awk \
+	  -f ${CDIR}/ControlDiagram.awk \
 > ${TDIR}/${_DATA}.tmp
 cat ${TDIR}/${_DATA}.tmp | dot -T${PIC_TYPE} -o "${long_pic}"
 cat ${TDIR}/${_DATA}.tmp | dot -T${PIC_TYPE2} -o "${long_pic2}"
