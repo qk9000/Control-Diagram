@@ -143,7 +143,7 @@ Indent can be used by 4 spaces or one Tab.
 
 | symbol | effection                                                    |
 | ------ | ------------------------------------------------------------ |
-| `+`    | heading module（support multiple '+', i.e. multiple layer），but cross module connections should not be under it |
+| `+`    | heading module（support multiple '+', i.e. multiple nested modules），but cross-module connections should not be under it |
 | `:`    | condition                                                    |
 | `<`    | invoked flow（Program）or associated by（UML）               |
 | `~`    | asynchronous transmission（Program）or depend（UML）         |
