@@ -107,7 +107,7 @@ Based on MingW or Cygwin, and please refer to the folder “for windows” for p
 Option 1，
 
 ```
-cd [Directory of ControlFlow]
+cd [Directory of this program]
 export PATH=`pwd`/for_windows:$PATH
 ```
 
@@ -117,10 +117,9 @@ Or simply copy cflow exe file into “C:\Windows\System32\”.
 
 
 
-## Command
+## Options
 
 ```
-$ flowchart.sh
 -d <[TB|LR]> - direction (default is TB) (example: '-d LR')
 -D <num> - depth
 -f <name> - function name (-f '' means all functions)
