@@ -7,7 +7,7 @@ It's an easy, immediate, efficient, intuitive and extensible design-drawing tool
 ## Example 1
 
 ```
-./flowchart.sh.sh example/exmaple1.txt
+./ControlDiagram.sh example/exmaple1.txt
 ```
 
 ![20211229_142333](example/20211229_142333.svg)
@@ -15,7 +15,7 @@ It's an easy, immediate, efficient, intuitive and extensible design-drawing tool
 ## Example 2
 
 ```
-./flowchart.sh.sh example/exmaple2.txt
+./ControlDiagram.sh example/exmaple2.txt
 ```
 
 ![20211229_135103](example/20211229_135103.svg)
@@ -23,7 +23,7 @@ It's an easy, immediate, efficient, intuitive and extensible design-drawing tool
 ## Example 3
 
 ```
-./flowchart.sh.sh example/example3.txt
+./ControlDiagram.sh example/example3.txt
 ```
 
 ![20211228_140518](example/20211228_140518.svg)
@@ -31,7 +31,7 @@ It's an easy, immediate, efficient, intuitive and extensible design-drawing tool
 ## Example 4
 
 ```
-./flowchart.sh.sh -c example/code.c example/code2.c
+./ControlDiagram.sh -c example/code.c example/code2.c
 ```
 
 ![20211228_140756](example/20211228_140756.svg)
@@ -41,7 +41,7 @@ It's an easy, immediate, efficient, intuitive and extensible design-drawing tool
 Automatically draw the call diagram
 
 ```
-flowchart.sh -d LR -c code/linux/kernel/sched/core_sched.c
+./ControlDiagram.sh -d LR -c code/linux/kernel/sched/core_sched.c
 ```
 
 ![](example/20220303_084130.svg)
@@ -53,7 +53,7 @@ flowchart.sh -d LR -c code/linux/kernel/sched/core_sched.c
 A swimlane diagram that can represent a time sequence
 
 ```
- flowchart.sh -s example/example4.txt
+./ControlDiagram.sh -s example/example4.txt
 ```
 
 ![](example/20220303_100329.svg)
