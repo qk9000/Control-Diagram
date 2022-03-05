@@ -1,4 +1,4 @@
-# **Simple **
+# Simple Diagram Maker
 
 It's an easy, immediate, efficient, intuitive and extensible design-drawing tool.
 
