@@ -1,6 +1,6 @@
 # Simple Diagram Maker
 
-It's an easy, immediate, efficient, intuitive and extensible design-drawing tool.
+An easy, alterable, boundless, interconnected, versatile, efficient, intuitive and extensible diagram-generator from text.
 
 
 
