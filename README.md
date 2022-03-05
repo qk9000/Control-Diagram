@@ -125,7 +125,8 @@ Or simply copy cflow exe file into “C:\Windows\System32\”.
 -f <name> - function name (-f '' means all functions)
 -F <string [string]> - strings to filter out
 -c <code-file> - input file is raw code
--s enable swimlane, recommend combination with '-d LR'
+-s enable swimlane, recommend direction from top to bottom
+-S disable swimlane
 -r reverse flow as order as called by
 ```
 
@@ -133,7 +134,7 @@ Or simply copy cflow exe file into “C:\Windows\System32\”.
 
 ## Grammar
 
-Indent can be used by 4 spaces or one Tab.
+> Indent can be used by 4 spaces or one Tab.
 
 > Use space as delimiter for symbols, connections, prefix, postfix
 
@@ -172,3 +173,12 @@ Indent can be used by 4 spaces or one Tab.
 | postfix reference | internal cell                  |
 | ----------------- | ------------------------------ |
 | `/> alias`        | refer to a subcell or paracell |
+
+> Specify and change style by starting with annotation symbol "#" or "//" at anywhere in runtime
+
+| symbol                | effection                                 |
+| --------------------- | ----------------------------------------- |
+| # -s | enable swimlane, recommend direction from top to bottom |
+| # -S | disable swimlane |
+| # -d LR | direction is from left to right |
+| # -d TB | direction is from top to bottom |
