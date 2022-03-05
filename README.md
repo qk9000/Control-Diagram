@@ -1,4 +1,4 @@
-# **Simple Flow Chart**
+# **Simple **
 
 It's an easy, immediate, efficient, intuitive and extensible design-drawing tool.
 
