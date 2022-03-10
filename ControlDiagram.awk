@@ -12,10 +12,36 @@ function comment_filter(l_comment, l_type) {
 
 	if (l_type == 1) {
 		# EOL
-		#l_comment = gensub(/[ ][/][.][ ]/, "\\\\l ", "g", l_comment);
-		l_comment = gensub(/[ ][/][-][ ][/][-][ ]/, "\\\\l\\\\l ", "g", l_comment);
-		l_comment = gensub(/[ ][/][-][/][-][ ]/, "\\\\l\\\\l ", "g", l_comment);
-		l_comment = gensub(/[ ][/][-][ ]/, "\\\\l ", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][ ][/][-][ ]/, "\\\\n\\\\n", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][/][-][ ]/, "\\\\n\\\\n", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][ ]/, "\\\\n", "g", l_comment);
+
+		#l_comment = gensub(/[)][ ]/, ")\\\\n ", "g", l_comment);
+		#l_comment = gensub(/[-][ ]/, "-\\\\n ", "g", l_comment);
+		#l_comment = gensub(/[:][ ]/, ":\\\\n ", "g", l_comment);
+		l_comment = gensub(/[,][ ]/, ",\\\\n ", "g", l_comment);
+		l_comment = gensub(/[.][ ]/, ".\\\\n ", "g", l_comment);
+		l_comment = gensub(/[;][ ]/, ";\\\\n ", "g", l_comment);
+		l_comment = gensub(/[?][ ]/, "?\\\\n ", "g", l_comment);
+		l_comment = gensub(/[!][ ]/, "!\\\\n ", "g", l_comment);
+		#l_comment = gensub(/[）]/,   "）\\\\n ", "g", l_comment);
+		#l_comment = gensub(/[—][—]/, "——\\\\n ", "g", l_comment);
+		#l_comment = gensub(/[：]/,   "：\\\\n ", "g", l_comment);
+		l_comment = gensub(/[，]/,   "，\\\\n ", "g", l_comment);
+		l_comment = gensub(/[。]/,   "。\\\\n ", "g", l_comment);
+		l_comment = gensub(/[；]/,   "；\\\\n ", "g", l_comment);
+		l_comment = gensub(/[？]/,   "？\\\\n ", "g", l_comment);
+		l_comment = gensub(/[！]/,   "！\\\\n ", "g", l_comment);
+		#l_comment = gensub(/[、]/,   "、\\\\n ", "g", l_comment);
+
+		l_comment = l_comment "\\n "
+	}
+	else {
+		# EOL
+		l_comment = gensub(/[ ][/][-][ ][/][-][ ]/, "\\\\l\\\\l", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][/][-][ ]/, "\\\\l\\\\l", "g", l_comment);
+		l_comment = gensub(/[ ][/][-][ ]/, "\\\\l", "g", l_comment);
+
 		#l_comment = gensub(/[)][ ]/, ")\\\\l ", "g", l_comment);
 		#l_comment = gensub(/[-][ ]/, "-\\\\l ", "g", l_comment);
 		#l_comment = gensub(/[:][ ]/, ":\\\\l ", "g", l_comment);
@@ -24,18 +50,19 @@ function comment_filter(l_comment, l_type) {
 		l_comment = gensub(/[;][ ]/, ";\\\\l ", "g", l_comment);
 		l_comment = gensub(/[?][ ]/, "?\\\\l ", "g", l_comment);
 		l_comment = gensub(/[!][ ]/, "!\\\\l ", "g", l_comment);
-		#l_comment = gensub(/[）]/,   "）\\\\l", "g", l_comment);
-		#l_comment = gensub(/[—][—]/, "——\\\\l", "g", l_comment);
-		#l_comment = gensub(/[：]/,   "：\\\\l", "g", l_comment);
-		l_comment = gensub(/[，]/,   "，\\\\l", "g", l_comment);
-		l_comment = gensub(/[。]/,   "。\\\\l", "g", l_comment);
-		l_comment = gensub(/[；]/,   "；\\\\l", "g", l_comment);
-		l_comment = gensub(/[？]/,   "？\\\\l", "g", l_comment);
-		l_comment = gensub(/[！]/,   "！\\\\l", "g", l_comment);
-		#l_comment = gensub(/[、]/,   "、\\\\l", "g", l_comment);
+		#l_comment = gensub(/[）]/,   "）\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[—][—]/, "——\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[：]/,   "：\\\\l ", "g", l_comment);
+		l_comment = gensub(/[，]/,   "，\\\\l ", "g", l_comment);
+		l_comment = gensub(/[。]/,   "。\\\\l ", "g", l_comment);
+		l_comment = gensub(/[；]/,   "；\\\\l ", "g", l_comment);
+		l_comment = gensub(/[？]/,   "？\\\\l ", "g", l_comment);
+		l_comment = gensub(/[！]/,   "！\\\\l ", "g", l_comment);
+		#l_comment = gensub(/[、]/,   "、\\\\l ", "g", l_comment);
+
+		l_comment = l_comment "\\l "
 	}
-	#l_comment = gensub(/$/,"\\\\l", "g", l_comment);
-	l_comment = l_comment "\\l"
+
 	return l_comment;
 }
 
@@ -73,7 +100,7 @@ function name_filter(l_node, l_type) {
 		name = substr(name, 1, loc_mark - 1);
 		#name = "\\\"" name "\\\"" ":" mark
 	}
-	name = comment_filter(name, 1);
+	name = comment_filter(name, l_type);
 	# Direct newline look ugly
 	#node = node gensub(/ [|] /, "\n\n", "g", sub_cell);
 	#node = name gensub(/ [|] /, "\\\\n\\\\n", "g", sub_cell);
@@ -86,7 +113,7 @@ function name_filter(l_node, l_type) {
 			line_label = substr(l_node, loc_line_label + 4);
 		}
 		#line_label = gensub(/[ \t]+$/, "", "g", line_label);
-		line_label = comment_filter(line_label, 1);
+		line_label = comment_filter(line_label, l_type);
 	}
 
 	if (loc_sub_cell > 0) {
@@ -97,41 +124,48 @@ function name_filter(l_node, l_type) {
 			sub_cell = substr(l_node, loc_sub_cell);
 		}
 		#sub_cell = gensub(/[ \t]+$/, "", "g", sub_cell);
-		sub_cell = comment_filter(sub_cell, 1);
+		sub_cell = comment_filter(sub_cell, l_type);
 		sub_cell = gensub(/([^/])[|]/, "\\1│", "g", sub_cell);
-		if (is_sub == 1) {
-			sub_cell = gensub(/ [/][_] /, " \\\\l\\| ", "g", sub_cell);
-		}
-		else if (is_sub == 2) {
-			sub_cell = gensub(/ [/][|] /, " \\\\l\\| ", "g", sub_cell);
-		}
-	}
+		# For subcell in a choose node
+		if (l_type == 1) {
+			if (is_sub == 1) {
+				node = name gensub(/ [/][_] /, "\\\\n", "g", sub_cell);
+			}
+			else if (is_sub == 2) {
+				node = name gensub(/ [/][|] /, "\\\\n", "g", sub_cell);
+			}
 
-	# For subcell
-	if (l_type == 1) {
-		node = name gensub(/ [|] /, "\\\\n\\\\n", "g", sub_cell);
-	}
-
-	# Class nodes
-	else if (loc_sub_cell > 0) {
-		node = name;
-		if (is_sub == 1) {
-			# Fix Bug: Miss the first chinese sentence in node declaration which has subcell, adding a space after '{' can fix it.
-			#printf("\t\"%s\" [label=\"{ %s%s}\"];\n", node, name, sub_cell);
-			if (direction == "TB") {
-				printf("\t\"%s\" [label=\"{ %s%s}\"];\n", name, name, sub_cell);
-			}
-			else {
-				printf("\t\"%s\" [label=\"%s%s\"];\n", name, name, sub_cell);
-			}
+			node = name gensub(/ [|] /, "\\\\n", "g", sub_cell);
 		}
-		else if (is_sub == 2) {
-			#printf("\t\"%s\" [label=\"%s%s\"];\n", node, name, sub_cell);
-			if (direction == "TB") {
-				printf("\t\"%s\" [label=\"%s%s\"];\n", name, name, sub_cell);
+		# Class nodes
+		else {
+			if (is_sub == 1) {
+				sub_cell = gensub(/ [/][_] /, "\\\\l\\| ", "g", sub_cell);
 			}
-			else {
-				printf("\t\"%s\" [label=\"{ %s%s}\"];\n", name, name, sub_cell);
+			else if (is_sub == 2) {
+				sub_cell = gensub(/ [/][|] /, "\\\\l\\| ", "g", sub_cell);
+			}
+
+			node = name;
+
+			if (is_sub == 1) {
+				# Fix Bug: Miss the first chinese sentence in node declaration which has subcell, adding a space after '{' can fix it.
+				#printf("\t\"%s\" [label=\"{ %s%s}\"];\n", node, name, sub_cell);
+				if (direction == "TB") {
+					printf("\t\"%s\" [label=\"{ %s%s}\"];\n", name, name, sub_cell);
+				}
+				else {
+					printf("\t\"%s\" [label=\"%s%s\"];\n", name, name, sub_cell);
+				}
+			}
+			else if (is_sub == 2) {
+				#printf("\t\"%s\" [label=\"%s%s\"];\n", node, name, sub_cell);
+				if (direction == "TB") {
+					printf("\t\"%s\" [label=\"%s%s\"];\n", name, name, sub_cell);
+				}
+				else {
+					printf("\t\"%s\" [label=\"{ %s%s}\"];\n", name, name, sub_cell);
+				}
 			}
 		}
 	}
@@ -165,12 +199,7 @@ function print_subgraph(l_node) {
 	if (module_depth >= 5) {
 		printf("\tsubgraph cluster_%s {labeljust=l;color=purple;fontname=\"%s\";fontsize=15;label=\"%s\";", module5_c, cluster_font, module5);
 	}
-	#if (l_l_align == 1) {
-	#	printf("\"%s\\l\";", l_node);
-	#}
-	#else {
 		printf("\"%s\";", l_node);
-	#}
 	if (module_depth >= 5) {
 		printf("};");
 	}
@@ -201,6 +230,8 @@ BEGIN {
 	nodebase = 4;
 	oldswimlane = "";
 	olddirection = "";
+	tmp_cell_color = cell_color;
+	tmp_choose_color = choose_color;
 
 	# Print some setting info
 	if (output == "dot") {
@@ -228,7 +259,7 @@ BEGIN {
 		#printf("\tlabeldistance=0;\n");
 		printf("\tbgcolor=%s;\n", bgcolor);
 		printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n",
-			   shape, font, cell_color);
+			   shape, font, tmp_cell_color);
 		printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, line_color);
 	}
 }
@@ -283,10 +314,12 @@ BEGIN {
 	node = substr($0, nodedepth);
 	nodedepth = nodedepth - 1;
 	if (nodedepth == 0) {
+		tmp_cell_color = cell_color;
+		tmp_choose_color = choose_color;
 		printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,color=%s];\n",
 			   font, line_color);
 		printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n",
-			   shape, font, cell_color);
+			   shape, font, tmp_cell_color);
 		# module
 		if (match($0, "^[+] ")) {
 			module   = substr($0, 3);
@@ -342,39 +375,40 @@ BEGIN {
 
 	if (match(node, "^[!] ")) {
 		if (n == "default") {
-			n = cell_color;
-			printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, n);
-			n = line_color;
-			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, n);
+			tmp_cell_color = cell_color;
+			tmp_choose_color = choose_color;
+			printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, tmp_cell_color);
+			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, line_color);
 		}
 		else {
-			#printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded,bold\",fillcolor=\"%s\"];\n", shape, font, n);
 			if (n == "red") {
-				n = "#ff5f5f";
+				tmp_cell_color = "#ff5f5f";
 			}
 			else if (n == "blue") {
-				n = "#87d7ff";
+				tmp_cell_color = "#87d7ff";
 			}
 			else if (n == "green") {
-				n = "#87ffaf";
+				tmp_cell_color = "#87ffaf";
 			}
 			else if (n == "yellow") {
-				n = "#d7ff00";
+				tmp_cell_color = "#d7ff00";
 			}
 			else if (n == "orange") {
-				n = "#ffd700";
+				tmp_cell_color = "#ffd700";
 			}
 			else if (n == "pink") {
-				n = "#ffd7ff";
+				tmp_cell_color = "#ffd7ff";
 			}
 			else if (n == "gray") {
-				n = "#dadada";
+				tmp_cell_color = "#dadada";
 			}
 			else if (n == "purple") {
-				n = "#af87ff";
+				tmp_cell_color = "#af87ff";
 			}
-			printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, n);
-			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, n);
+			tmp_choose_color = tmp_cell_color;
+			#printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded,bold\",fillcolor=\"%s\"];\n", shape, font, n);
+			printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, tmp_cell_color);
+			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, line_color);
 		}
 		next;
 	}
@@ -412,7 +446,7 @@ BEGIN {
 		else if (match(node, "^[:] ")) {
 			n = name_filter(n, 1);
 			printf("\t\"%s\" [shape=diamond,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n",
-				   n, font, choose_color);
+				   n, font, tmp_choose_color);
 			printf("\t\"%s\"%s -> \"%s\"%s [label=\"%s\",style=solid,arrowhead=curve];\n", p_n, p_mark, n, mark, line_label);
 			print_subgraph(n);
 		}
