@@ -150,7 +150,7 @@ Or simply copy cflow exe file into “C:\Windows\System32\”.
 | `~`    | asynchronous transmission（Program）or depend（UML）         |
 | `<~`   | backward asynchronous transmission（Program）or depended by（UML） |
 | `#`    | comment                                                      |
-| `!`    | customize color (default/darkgoldenrod/deeppink/darkgreen/darkviolet/blue/...) |
+| `!`    | customize color (default/red/blue/green/yellow/orange/pink/gray/purple) |
 | `-`    | queue up with no line                                        |
 | `--`   | queue up with line                                           |
 | `=`    | link                                                         |

@@ -75,6 +75,7 @@
 #| `<~` | backward asynchronous transmission（程序）or depended by（UML）                |
 #| `#`  | 批注框                                                                         |
 #| `!`  | customize color (default/darkgoldenrod/deeppink/darkgreen/darkviolet/blue/...) |
+#| `!`  | customize color (default/red/blue/green/yellow/orange/pink/gray/purple)        |
 #| `-`  | queue up with no line                                                          |
 #| `--` | queue up with line                                                             |
 #| `=`  | link                                                                           |
@@ -298,33 +299,33 @@ cat ${file} | expand -t 4 -i \
 cat ${TDIR}/${_DATA}.tmp | dot -T${PIC_TYPE} -o "${long_pic}"
 cat ${TDIR}/${_DATA}.tmp | dot -T${PIC_TYPE2} -o "${long_pic2}"
 
-if [ "x$BROWSER" == "x" ]; then
-	if [ "x$OS" == "xDarwin" ]; then
-		BROWSER=/Applications/Safari.app/Contents/MacOS/Safari
-	elif [[ "$OS" =~ ^MINGW ]]; then
-		BROWSER=LanGuang
-	else
-		which firefox >/dev/null 2>&1
-		if [ $? -eq 0 ]; then
-			BROWSER=firefox
-			#if [`id -u` -eq 0 ]; then
-			#	# Enable to open firefox as root
-			#	mkdir -p ~/.Xauthority
-			#	chown root: ~/.Xauthority
-			#	export XAUTHORITY=~/.Xauthority
-			#fi
-		else
-			BROWSER=chromium-browser
-		fi
-	fi
-fi
-which $BROWSER >/dev/null 2>&1
-[ $? -ne 0 ] && exit 0
-if [[ "$BROWSER" == "google-chrome" ]]; then
-	browser_opt="--no-sandbox"
-fi
-if [[ "$BROWSER" == "FirefoxPortable" ]]; then
-	$BROWSER $browser_opt file:///"${long_pic}" >/dev/null 2>&1 &
-else
-	$BROWSER $browser_opt "${long_pic}" >/dev/null 2>&1 &
-fi
+#if [ "x$BROWSER" == "x" ]; then
+#	if [ "x$OS" == "xDarwin" ]; then
+#		BROWSER=/Applications/Safari.app/Contents/MacOS/Safari
+#	elif [[ "$OS" =~ ^MINGW ]]; then
+#		BROWSER=LanGuang
+#	else
+#		which firefox >/dev/null 2>&1
+#		if [ $? -eq 0 ]; then
+#			BROWSER=firefox
+#			#if [`id -u` -eq 0 ]; then
+#			#	# Enable to open firefox as root
+#			#	mkdir -p ~/.Xauthority
+#			#	chown root: ~/.Xauthority
+#			#	export XAUTHORITY=~/.Xauthority
+#			#fi
+#		else
+#			BROWSER=chromium-browser
+#		fi
+#	fi
+#fi
+#which $BROWSER >/dev/null 2>&1
+#[ $? -ne 0 ] && exit 0
+#if [[ "$BROWSER" == "google-chrome" ]]; then
+#	browser_opt="--no-sandbox"
+#fi
+#if [[ "$BROWSER" == "FirefoxPortable" ]]; then
+#	$BROWSER $browser_opt file:///"${long_pic}" >/dev/null 2>&1 &
+#else
+#	$BROWSER $browser_opt "${long_pic}" >/dev/null 2>&1 &
+#fi

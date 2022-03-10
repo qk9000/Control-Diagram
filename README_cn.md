@@ -136,7 +136,7 @@ $ flowchart.sh
 | `~`  | asynchronous transmission（程序）or depend（UML）            |
 | `<~` | backward asynchronous transmission（程序）or depended by（UML） |
 | `#`  | 批注框                                                       |
-| `!`  | customize color (default/darkgoldenrod/deeppink/darkgreen/darkviolet/blue/...) |
+| `!`  | customize color (default/read/blue/green/yellow/orange/pink/gray/purple) |
 | `-`  | queue up with no line                                        |
 | `--` | queue up with line                                           |
 | `=`  | link                                                         |

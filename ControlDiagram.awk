@@ -349,8 +349,32 @@ BEGIN {
 		}
 		else {
 			#printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded,bold\",fillcolor=\"%s\"];\n", shape, font, n);
-			printf("\tnode [shape=%s,fontname=%s,fontsize=12,fontcolor=white,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, n);
-			printf("\tedge [fontname=%s,fontsize=12,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, n);
+			if (n == "red") {
+				n = "#ff5f5f";
+			}
+			else if (n == "blue") {
+				n = "#87d7ff";
+			}
+			else if (n == "green") {
+				n = "#87ffaf";
+			}
+			else if (n == "yellow") {
+				n = "#d7ff00";
+			}
+			else if (n == "orange") {
+				n = "#ffd700";
+			}
+			else if (n == "pink") {
+				n = "#ffd7ff";
+			}
+			else if (n == "gray") {
+				n = "#dadada";
+			}
+			else if (n == "purple") {
+				n = "#af87ff";
+			}
+			printf("\tnode [shape=%s,fontname=%s,fontsize=9,fontcolor=black,color=\"#800000\",style=\"filled,rounded\",fillcolor=\"%s\"];\n", shape, font, n);
+			printf("\tedge [fontname=%s,fontsize=9,fontcolor=black,arrowsize=1,penwidth=1,color=\"%s\"];\n", font, n);
 		}
 		next;
 	}
