@@ -1,3 +1,5 @@
+***Please look forward to a big version upgrade !***
+
 # Simple Diagram Maker
 
 An easy, alterable, boundless, interconnected, versatile, efficient, intuitive and extensible diagram-generator from text.
